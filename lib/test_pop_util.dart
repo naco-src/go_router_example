@@ -37,6 +37,42 @@ class SecondPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => Container(
+                    width: 100,
+                    height: 200,
+                    color: Colors.white,
+                  ),
+                );
+                showDialog(
+                  context: context,
+                  builder: (context) => Container(
+                    width: 100,
+                    height: 200,
+                    color: Colors.white,
+                  ),
+                );
+
+                showDialog(
+                  context: context,
+                  builder: (context) => Container(
+                    width: 100,
+                    height: 200,
+                    color: Colors.white,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          GoRouter.of(context).navigator!.popUntil(
+                              (route) => route.settings.name == "page2");
+                        },
+                        child: const Text('pop')),
+                  ),
+                );
+              },
+              child: const Text('show dialog!!!'),
+            ),
+            ElevatedButton(
+              onPressed: () {
                 GoRouter.of(context).go('/');
               },
               child: const Text('back to home!!!'),
