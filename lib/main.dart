@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:go_router_example/push_usecases_demo.dart';
 import 'package:go_router_example/test_pop_util.dart';
 
 void main() {
@@ -36,8 +37,10 @@ class MyHomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               ElevatedButton(
-                  onPressed: () {},
-                  child: Text('navigate to  push usecases examples screen')),
+                  onPressed: () {
+                    context.pushNamed('pushUsecaseDemoScreen');
+                  },
+                  child: Text('push usecases')),
               ElevatedButton(
                   onPressed: () {
                     context.push('/test_pop_util');
@@ -55,10 +58,32 @@ final GoRouter _router = GoRouter(
   debugLogDiagnostics: true,
   routes: <GoRoute>[
     GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) =>
-          const MyHomePage(),
-    ),
+        path: '/',
+        builder: (BuildContext context, GoRouterState state) =>
+            const MyHomePage(),
+        routes: [
+          GoRoute(
+            name: 'PushDemoPage1',
+            path: 'PushDemoPage1',
+            builder: (context, state) => const PushDemoPage1(),
+          ),
+          GoRoute(
+            name: 'PushDemoPage2',
+            path: 'PushDemoPage2',
+            builder: (context, state) => const PushDemoPage2(),
+          ),
+          GoRoute(
+              name: 'pushUsecaseDemoScreen',
+              path: 'pushusecasedemo',
+              builder: (context, state) => const PushUsecaseDemo(),
+              routes: [
+                GoRoute(
+                  name: 'CourseScreen',
+                  path: 'courses',
+                  builder: (context, state) => const CourseScreen(),
+                ),
+              ]),
+        ]),
     GoRoute(
       name: 'test_pop_util',
       path: '/test_pop_util',
