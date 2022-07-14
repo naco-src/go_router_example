@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:go_router_example/params_queryparams_usecases_demo.dart';
 import 'package:go_router_example/push_usecases_demo.dart';
 import 'package:go_router_example/test_pop_util.dart';
 
@@ -46,6 +47,11 @@ class MyHomePage extends StatelessWidget {
                     context.push('/test_pop_util');
                   },
                   child: Text('Test pop util')),
+              ElevatedButton(
+                  onPressed: () {
+                    context.goNamed('QueryParamsUsecaseDemoScreen');
+                  },
+                  child: Text('go QueryParamsUsecaseDemoScreen')),
             ],
           ),
         ),
@@ -83,6 +89,38 @@ final GoRouter _router = GoRouter(
                   builder: (context, state) => const CourseScreen(),
                 ),
               ]),
+          GoRoute(
+              name: 'QueryParamsUsecaseDemoScreen',
+              path: 'queryparamsusecasedemo',
+              builder: (context, state) => const QueryParamsUsecaseDemo(),
+              routes: [
+                GoRoute(
+                    name: 'ListCourseScreen',
+                    path: 'courses',
+                    builder: (context, state) => const ListCourseScreen(),
+                    routes: [
+                      GoRoute(
+                        name: 'CourseDetailScreen',
+                        path: ':course_id',
+                        builder: (context, state) =>
+                            const CourseDetailsScreen(),
+                        routes: [
+                          GoRoute(
+                            name: 'LessonDetailsScreen',
+                            path: 'lessons/:lesson_id',
+                            builder: (context, state) =>
+                            const LessonDetailsScreen(),
+                          ),
+                        ]
+                      ),
+
+                    ]),
+              ]),
+          GoRoute(
+            name: 'CourseDetailsScreen2',
+            path: 'queryparamsusecasedemo/courses/:course_id',
+            builder: (context, state) => const CourseDetailsScreen(),
+          ),
         ]),
     GoRoute(
       name: 'test_pop_util',
