@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:go_router_example/error_screen.dart';
 import 'package:go_router_example/login_screen.dart';
+import 'package:go_router_example/refresh_and_back_to_previous.dart';
 import 'package:go_router_example/state.dart';
 import 'package:go_router_example/params_queryparams_usecases_demo.dart';
 import 'package:go_router_example/push_usecases_demo.dart';
@@ -15,6 +16,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
   late final AuthState? authState;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<AuthState>(
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
+  //RouteName: FeatureName+Route
   late final GoRouter _router = GoRouter(
     debugLogDiagnostics: true,
     routes: <GoRoute>[
@@ -98,6 +101,20 @@ class MyApp extends StatelessWidget {
               name: 'CourseDetailsScreen2',
               path: 'queryparamsusecasedemo/courses/:course_id',
               builder: (context, state) => const CourseDetailsScreen(),
+            ),
+            GoRoute(
+              name: 'RefreshAndBackToPreviousPageUsecaseDemo',
+              path: 'refresh_and_back_demo',
+              builder: (context, state) =>
+                  const RefreshAndBackToPreviousPageUsecaseDemo(),
+              routes: [
+                GoRoute(
+                  name: 'RefreshAndBackToPreviousPageUsecaseDemoPage1',
+                  path: 'page1',
+                  builder: (context, state) =>
+                      const RefreshAndBackToPreviousPageUsecaseDemoPage1(),
+                ),
+              ],
             ),
           ]),
       GoRoute(
@@ -192,6 +209,14 @@ class MyHomePage extends StatelessWidget {
                     context.push('/notfound');
                   },
                   child: const Text('Dummy page')),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    context.goNamed('RefreshAndBackToPreviousPageUsecaseDemo');
+                  },
+                  child: const Text('RefreshAndBackToPreviousPageUsecaseDemo')),
             ],
           ),
         ),
