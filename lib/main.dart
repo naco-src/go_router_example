@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:go_router_example/error_screen.dart';
 import 'package:go_router_example/login_screen.dart';
+import 'package:go_router_example/nested_navigation.dart';
 import 'package:go_router_example/refresh_and_back_to_previous.dart';
 import 'package:go_router_example/state.dart';
 import 'package:go_router_example/params_queryparams_usecases_demo.dart';
@@ -103,6 +104,17 @@ class MyApp extends StatelessWidget {
               builder: (context, state) => const CourseDetailsScreen(),
             ),
             GoRoute(
+              path: 'nested_navigation',
+              redirect: (state) => '/nested_navigation/0',
+            ),
+            GoRoute(
+              path: 'nested_navigation/:tab_index',
+              builder: (context, state) {
+                final tabIndex = int.parse(state.params['tab_index']!);
+                return NestedNavigationScreen(tabIndex: tabIndex);
+              },
+            ),
+            GoRoute(
               name: 'RefreshAndBackToPreviousPageUsecaseDemo',
               path: 'refresh_and_back_demo',
               builder: (context, state) =>
@@ -156,7 +168,7 @@ class MyApp extends StatelessWidget {
 
   Future<AuthState> _getLoginInfo() async {
     await Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 1),
     );
     final authState = AuthState();
     authState.setAuthStatus(AuthStateEnum.authenticated);
@@ -211,6 +223,12 @@ class MyHomePage extends StatelessWidget {
                   child: const Text('Dummy page')),
               const SizedBox(
                 height: 20,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  context.go('/nested_navigation');
+                },
+                child: const Text('Nested navigation'),
               ),
               ElevatedButton(
                   onPressed: () {
