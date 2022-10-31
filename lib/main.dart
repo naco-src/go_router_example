@@ -9,8 +9,10 @@ import 'package:go_router_example/params_queryparams_usecases_demo.dart';
 import 'package:go_router_example/push_usecases_demo.dart';
 import 'package:go_router_example/test_pop_util.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() async {
+  usePathUrlStrategy();
   runApp(MyApp());
 }
 
