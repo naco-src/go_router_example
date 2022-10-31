@@ -9,8 +9,10 @@ import 'package:go_router_example/params_queryparams_usecases_demo.dart';
 import 'package:go_router_example/push_usecases_demo.dart';
 import 'package:go_router_example/test_pop_util.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() async {
+  usePathUrlStrategy();
   runApp(MyApp());
 }
 
@@ -33,8 +35,7 @@ class MyApp extends StatelessWidget {
           value: authState,
           builder: (context, child) {
             return MaterialApp.router(
-              routeInformationParser: _router.routeInformationParser,
-              routerDelegate: _router.routerDelegate,
+              routerConfig: _router,
               title: 'Flutter Demo',
             );
           },
@@ -105,7 +106,7 @@ class MyApp extends StatelessWidget {
             ),
             GoRoute(
               path: 'nested_navigation',
-              redirect: (state) => '/nested_navigation/0',
+              redirect: (context, state) => '/nested_navigation/0',
             ),
             GoRoute(
               path: 'nested_navigation/:tab_index',
@@ -153,9 +154,8 @@ class MyApp extends StatelessWidget {
       ),
     ],
     errorBuilder: (context, state) => const ErrorScreen(),
-    urlPathStrategy: UrlPathStrategy.path,
     refreshListenable: authState,
-    redirect: (state) {
+    redirect: (context, state) {
       final loggedIn = authState?.stateEnum == AuthStateEnum.authenticated;
       final loggingIn = state.subloc == '/login';
 
