@@ -23,6 +23,12 @@ class PushUsecaseDemo extends StatelessWidget {
               },
               child: const Text('Push to PushDemoPage1')),
 
+          ElevatedButton(
+              onPressed: () {
+                context.pushNamed('PushDemoPage1x1');
+              },
+              child: const Text('Push to PushDemoPage1x1')),
+
           ///The go method does this by turning a single location into any number of pages in a stack using sub-routes.
           const Text(
               'The go method does this by turning a single location into any number of pages in a stack using sub-routes.'),
@@ -30,7 +36,8 @@ class PushUsecaseDemo extends StatelessWidget {
               onPressed: () {
                 context.goNamed('PushDemoPage2');
               },
-              child: const Text('Go to PushDemoPage2(pushReplacementNamed)')),
+              child: const Text(
+                  'pushReplacementNamed PushDemoPage2(pushReplacementNamed)')),
 
           ElevatedButton(
               onPressed: () {
@@ -57,7 +64,16 @@ class PushDemoPage1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar(context),
-      body: Text(GoRouter.of(context).location),
+      body: Column(
+        children: [
+          Text(GoRouter.of(context).location),
+          ElevatedButton(
+              onPressed: () {
+                context.replaceNamed('PushDemoPage1x2');
+              },
+              child: const Text('replaceNamed PushDemoPage1x2')),
+        ],
+      ),
     );
   }
 }
